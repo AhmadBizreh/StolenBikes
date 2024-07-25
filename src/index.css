@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  html {  
+    @apply scroll-smooth;
+  }
+
+  body {
+    min-height: 100vh;
+    @apply bg-[#fafafa] font-nunito;
+  }
+}
+::-webkit-scrollbar {
+  width: 0.375rem !important;
+  background-color: none;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: rgba(93, 89, 108, 0.2) !important;
+}
