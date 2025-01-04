@@ -7,16 +7,19 @@ import {
 } from "@nextui-org/react";
 import moment from "moment";
 import EmptyImage from "../assets/EmptyImage.svg";
+import { useNavigate } from "react-router-dom";
 const HomeCard = (props: any) => {
+  const navigate = useNavigate();
+
   return (
     <Card className="p-4">
       <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-        <a
+        <p
           className="font-bold text-large hover:underline hover:cursor-pointer line-clamp-1"
-          href={`/Case/${props.data.id}`}
+          onClick={() => navigate(`/Case/${props.data.id}`)}
         >
           {props.data.title}
-        </a>
+        </p>
         <small className="text-small text-default-500 line-clamp-2 h-10">
           {props.data.description}
         </small>

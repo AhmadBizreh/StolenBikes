@@ -41,6 +41,7 @@ const Index = () => {
             }));
             Bikes.refetch();
           }}
+          color="secondary"
         />
       </div>
     </>
