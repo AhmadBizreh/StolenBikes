@@ -2,12 +2,11 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import EmptyImage from '../assets/EmptyImage.svg';
 import { GetByTitleOrDescription } from '../Hooks/useBikes';
 import { Avatar } from '@nextui-org/react';
-import '../style/SearchBar.css';
 import { BikesResponse, IBike } from '../types/Ibike';
 import { useNavigate } from 'react-router-dom';
 import { UseInfiniteQueryResult } from 'react-query';
 
-const SearchBar: React.FC = () => {
+const SearchBar = () => {
   const [initialFilters, setInitialFilters] = useState<string>('');
   const [selectedItem, setSelectedItem] = useState<IBike | null>(null);
   const suggestionsRef = useRef<HTMLDivElement>(null);
@@ -32,11 +31,6 @@ const SearchBar: React.FC = () => {
     setTimeout(() => {
       setIsLoading(false);
     }, 2000);
-  };
-
-  const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-    }
   };
 
   const handleSelectItem = (item: IBike) => {
@@ -88,26 +82,24 @@ const SearchBar: React.FC = () => {
 
   return (
     <>
-      <div className="autocomplete mt-10">
-        <label htmlFor="searchInput" className='mb-2'>Find Bikes By Name</label>
-        <div className="autocomplete-input">
-          <input
-            type="text"
-            id="searchInput"
-            value={initialFilters}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-            placeholder="Search for Bikes..."
-          />
-        </div>
+      <div className="relative mt-10">
+        <label htmlFor="searchInput" className='mb-2 block text-center'>Find Bikes By Name</label>
+        <input
+          type="text"
+          id="searchInput"
+          value={initialFilters}
+          onChange={handleInputChange}
+          placeholder="Search for Bikes..."
+          className="w-full p-2 border border-gray-300 rounded focus:outline-none"
+        />
         {isLoading ? (
-          <div className="loading-search-bar">Loading...</div>
+          <div className="absolute bottom-[-50%] left-1/2 transform -translate-x-1/2 bg-black text-white p-2 rounded text-lg z-50">Loading...</div>
         ) : (
           initialFilters && data && (
-            <div ref={suggestionsRef} className="autocomplete-suggestions">
+            <div ref={suggestionsRef} className="absolute top-full left-0 w-full bg-white border border-gray-300 max-h-72 overflow-y-auto z-50">
               {data.pages.map((page) =>
                 page.bikes.map((item: IBike) => (
-                  <div className="suggestion" key={item.id} onClick={() => handleSelectItem(item)}>
+                  <div className="flex items-center p-2 border-b border-gray-200 hover:bg-gray-100 cursor-pointer" key={item.id} onClick={() => handleSelectItem(item)}>
                     <Avatar
                       alt={item.title}
                       className="flex-shrink-0 mr-2"
@@ -115,19 +107,16 @@ const SearchBar: React.FC = () => {
                       src={item.large_img ? item.large_img : EmptyImage}
                     />
                     <div className="flex flex-col">
-                      <span className="text-small clickable">{item.title}</span>
-                      <span className="text-tiny text-default-400">
-                        {item.description}
-                      </span>
+                      <span className="text-sm font-semibold">{item.title}</span>
+                      <span className="text-xs text-gray-500">{item.description}</span>
                     </div>
                   </div>
                 ))
               )}
-              {isFetchingNextPage && <div className='load-more-search-bar'>Loading more...</div>}
+              {isFetchingNextPage && <div className='flex justify-center items-center bg-gray-200 text-gray-700 p-2 mt-2 rounded'>Loading more...</div>}
             </div>
           )
         )}
-
       </div>
     </>
   );
