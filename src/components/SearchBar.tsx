@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import EmptyImage from '../assets/EmptyImage.svg';
 import { GetByTitleOrDescription } from '../Hooks/useBikes';
 import { Avatar } from '@nextui-org/react';
-import '../style/searchBar.css';
+import '../style/SearchBar.css';
 import { BikesResponse, IBike } from '../types/Ibike';
 import { useNavigate } from 'react-router-dom';
 import { UseInfiniteQueryResult } from 'react-query';
